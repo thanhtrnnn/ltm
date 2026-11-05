@@ -1,19 +1,18 @@
 import java.net.*;
 
-public class Bai11 {
+public class JNP932_UdpStringTitleCase {
     private static final String HOST = "36.50.135.242";
     private static final int PORT = 2207;
-    private static final String CREDS = ";B23DCAT120;v9DcKoZr"; 
+    private static final String CREDS = ";B23DCAT120;ECUuSPkC"; 
     public static String solve(String s) {
-        String[] w = s.split("[;,]");
-        String res = w[0] + ";";
-        int cmin = Integer.MAX_VALUE;
-        int cmax = -1;
-        for (int i = 1; i <= 50; i++) {
-            cmin = Math.min(cmin, Integer.valueOf(w[i]));
-            cmax = Math.max(cmax, Integer.valueOf(w[i]));
+        String[] w = s.split(";");
+        s = w[1];
+        String[] w1 = s.split("\\s+");
+        String ans = "";
+        for (int i = 0; i < w1.length; i++) {
+            ans += w1[i].substring(0, 1).toUpperCase() + w1[i].substring(1).toLowerCase() + " ";
         }
-        res += cmax + "," + cmin;
+        String res = w[0] + ";" + ans.trim();
         return res;
     }
 
@@ -27,7 +26,7 @@ public class Bai11 {
         r = new byte[10001];
         rp = new DatagramPacket(r, r.length);
         client.receive(rp);
-        String res = solve(new String(rp.getData(), 0, rp.getLength()).trim());
+        String res = solve(new String(rp.getData()).trim());
         sp = new DatagramPacket(res.getBytes(), res.getBytes().length, InetAddress.getByName(HOST), PORT);
         client.send(sp);
     }

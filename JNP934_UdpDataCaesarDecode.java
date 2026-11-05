@@ -1,19 +1,19 @@
 import java.net.*;
 
-public class Bai12 {
+public class JNP934_UdpDataCaesarDecode {
     private static final String HOST = "36.50.135.242";
     private static final int PORT = 2207;
-    private static final String CREDS = ";B23DCAT120;ECUuSPkC"; 
+    private static final String CREDS = ";B23DCAT280;XXXXXXXX"; 
     public static String solve(String s) {
         String[] w = s.split(";");
-        s = w[1];
-        String[] w1 = s.split("\\s+");
+        int k = Integer.parseInt(w[2].trim()) % 26;
         String ans = "";
-        for (int i = 0; i < w1.length; i++) {
-            ans += w1[i].substring(0, 1).toUpperCase() + w1[i].substring(1).toLowerCase() + " ";
+        for (char c : w[1].toCharArray()) {
+            if (Character.isUpperCase(c)) ans += (char) ((c - 'A' - k + 26) % 26 + 'A');
+            else if (Character.isLowerCase(c)) ans += (char) ((c - 'a' - k + 26) % 26 + 'a');
+            else ans += c;
         }
-        String res = w[0] + ";" + ans.trim();
-        return res;
+        return w[0] + ";" + ans;
     }
 
     public static void main(String[] args) throws Exception {
@@ -26,8 +26,9 @@ public class Bai12 {
         r = new byte[10001];
         rp = new DatagramPacket(r, r.length);
         client.receive(rp);
-        String res = solve(new String(rp.getData()).trim());
+        String res = solve(new String(rp.getData(), 0, rp.getLength()).trim());
         sp = new DatagramPacket(res.getBytes(), res.getBytes().length, InetAddress.getByName(HOST), PORT);
         client.send(sp);
+        client.close();
     }
 }

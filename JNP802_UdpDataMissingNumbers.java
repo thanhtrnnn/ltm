@@ -1,30 +1,20 @@
 import java.net.*;
-import java.util.*;
 
-public class Bai7 {    
+public class JNP802_UdpDataMissingNumbers {
     static final String HOST = "36.50.135.242";
-    static final Integer PORT = 2208;
-    static final String CREDS = ";B23DCAT120;11Zd3fhC";
+    static final Integer PORT = 2207;
+    static final String CREDS = ";B23DCAT120;7SgBVwrd";
 
     public static String solve(String s) {
-        String[] w = s.split(";");
-        s = w[1];
-        Map<Character, Integer> mp = new HashMap<>();
-        for (char x : s.toCharArray()) {
-            mp.put(x, mp.getOrDefault(x, 0) + 1);
+        String[] w = s.split("[;,]");
+        int n = Integer.valueOf(w[1]);
+        int[] a = new int[105];
+        for (int i = 2; i < w.length; i++) a[Integer.valueOf(w[i].trim())]++;
+        String res = w[0] + ";";
+        for (int i = 1; i <= n; i++) {
+            if(a[i] < 1) res += String.valueOf(i) + ",";
         }
-        char maxChar = 0;
-        int maxCount = 0;
-        for (char x : s.toCharArray()) {
-            if (mp.get(x) > maxCount) {
-                maxCount = mp.get(x);
-                maxChar = x;
-            }
-        }
-        String res = w[0] + ";" + maxChar + ":";
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == maxChar) res += (i + 1) + ",";
-        }
+        if (res.endsWith(",")) res = res.substring(0, res.length() - 1);
         return res;
     }
 

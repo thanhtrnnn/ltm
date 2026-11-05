@@ -1,21 +1,16 @@
 import java.net.*;
 
-public class Bai6 {
-    static final String HOST = "36.50.135.242";
-    static final Integer PORT = 2207;
-    static final String CREDS = ";B23DCAT120;7SgBVwrd";
-
+public class Q1612_UdpDataWeightedChecksum {
+    private static final String HOST = "36.50.135.242";
+    private static final int PORT = 2207;
+    private static final String CREDS = ";B23DCAT280;XXXXXXXX"; 
     public static String solve(String s) {
         String[] w = s.split("[;,]");
-        int n = Integer.valueOf(w[1]);
-        int[] a = new int[105];
-        for (int i = 2; i < w.length; i++) a[Integer.valueOf(w[i].trim())]++;
-        String res = w[0] + ";";
-        for (int i = 1; i <= n; i++) {
-            if(a[i] < 1) res += String.valueOf(i) + ",";
+        long sum = 0;
+        for (int i = 1; i < w.length; i++) {
+            sum += (long) i * Long.parseLong(w[i].trim());
         }
-        if (res.endsWith(",")) res = res.substring(0, res.length() - 1);
-        return res;
+        return w[0] + ";" + (sum % 100000);
     }
 
     public static void main(String[] args) throws Exception {
@@ -31,5 +26,6 @@ public class Bai6 {
         String res = solve(new String(rp.getData(), 0, rp.getLength()).trim());
         sp = new DatagramPacket(res.getBytes(), res.getBytes().length, InetAddress.getByName(HOST), PORT);
         client.send(sp);
+        client.close();
     }
 }

@@ -1,12 +1,12 @@
 import java.io.*;
 import java.net.*;
 
-import UDP.Student;
+import UDP.Employee;
 
-public class Bai13 {
+public class JNP1001_UdpObjectEmployee {
     private static final String HOST = "36.50.135.242";
     private static final int PORT = 2209;
-    private static final String CREDS = ";B23DCAT120;QhdUvdJS"; 
+    private static final String CREDS = ";B23DCAT280;XXXXXXXX"; 
     public static void main(String[] args) throws Exception {
         DatagramSocket client = new DatagramSocket();
         DatagramPacket sp, rp;
@@ -19,22 +19,23 @@ public class Bai13 {
         rp = new DatagramPacket(r, r.length);
         client.receive(rp);
         
-        ByteArrayInputStream ba = new ByteArrayInputStream(rp.getData());
+        ByteArrayInputStream ba = new ByteArrayInputStream(rp.getData(), 0, rp.getLength());
         ix = new byte[8];
         ba.read(ix, 0, 8);
         String id = new String(ix);
-        Student a = (Student) new ObjectInputStream(ba).readObject();
+        Employee a = (Employee) new ObjectInputStream(ba).readObject();
 
-        String wn[] = a.getName().toLowerCase().split("\\s+");
-        String resname = "", resmail = "";
+        String wn[] = a.getName().trim().toLowerCase().split("\\s+");
+        String resname = "";
         for (int i = 0; i < wn.length; i++) {
-            if (i == wn.length - 1) {
-                resmail = wn[i] + resmail + "@ptit.edu.vn";
-            } else resmail += wn[i].substring(0, 1);
             resname += wn[i].substring(0, 1).toUpperCase() + wn[i].substring(1) + " ";
         }
+        String wd[] = a.getHireDate().split("-");
+        int x = 0;
+        for (char c : wd[0].toCharArray()) x += c - '0';
         a.setName(resname.trim());
-        a.setEmail(resmail);
+        a.setSalary(Math.round(a.getSalary() * (100 + x)) / 100.0);
+        a.setHireDate(wd[2] + "/" + wd[1] + "/" + wd[0]);
         
         ByteArrayOutputStream bb = new ByteArrayOutputStream();
         bb.write(id.getBytes());
@@ -42,5 +43,6 @@ public class Bai13 {
         s = bb.toByteArray();
         sp = new DatagramPacket(s, s.length, InetAddress.getByName(HOST), PORT);
         client.send(sp);
+        client.close();
     }    
 }

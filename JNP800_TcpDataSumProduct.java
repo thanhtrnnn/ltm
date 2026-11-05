@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 
-public class Bai5 {
+public class JNP800_TcpDataSumProduct {
     private static final String HOST = "36.50.135.242";
     private static final int PORT = 2206; 
     private static final String CREDS = "B23DCAT120;rR4TMMmV";
