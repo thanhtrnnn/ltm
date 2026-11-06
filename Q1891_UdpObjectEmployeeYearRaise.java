@@ -31,6 +31,7 @@ public class Q1891_UdpObjectEmployeeYearRaise {
             String id = new String(ix);
             System.out.println("<< requestId=" + id + ", " + rp.getLength() + " byte");
             Employee a = (Employee) new ObjectInputStream(ba).readObject();
+            System.out.println("<< " + a);
 
             a.setName(titleCase(a.getName()));
             // x = tổng chữ số của năm tuyển dụng
@@ -47,6 +48,7 @@ public class Q1891_UdpObjectEmployeeYearRaise {
             sp = new DatagramPacket(s, s.length, InetAddress.getByName(HOST), PORT);
             client.send(sp);
             System.out.println(">> requestId=" + id + ", " + s.length + " byte");
+            System.out.println(">> " + a);
         } catch (SocketTimeoutException e) {
             System.err.println("[LỖI] Server không phản hồi sau 5s (sai HOST/PORT/qCode hoặc mạng chặn UDP)");
         } catch (StreamCorruptedException | ClassNotFoundException | InvalidClassException e) {

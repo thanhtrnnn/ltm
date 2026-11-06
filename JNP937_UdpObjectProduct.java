@@ -31,6 +31,7 @@ public class JNP937_UdpObjectProduct {
             String id = new String(ix);
             System.out.println("<< requestId=" + id + ", " + rp.getLength() + " byte");
             Product a = (Product) new ObjectInputStream(ba).readObject();
+            System.out.println("<< " + a);
 
             // Đổi chỗ từ đầu và từ cuối của name
             String[] wn = a.getName().trim().split("\\s+");
@@ -48,6 +49,7 @@ public class JNP937_UdpObjectProduct {
             sp = new DatagramPacket(s, s.length, InetAddress.getByName(HOST), PORT);
             client.send(sp);
             System.out.println(">> requestId=" + id + ", " + s.length + " byte");
+            System.out.println(">> " + a);
         } catch (SocketTimeoutException e) {
             System.err.println("[LỖI] Server không phản hồi sau 5s (sai HOST/PORT/qCode hoặc mạng chặn UDP)");
         } catch (StreamCorruptedException | ClassNotFoundException | InvalidClassException e) {

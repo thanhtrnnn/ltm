@@ -30,6 +30,7 @@ public class JNP1001_UdpObjectEmployee {
             String id = new String(ix);
             System.out.println("<< requestId=" + id + ", " + rp.getLength() + " byte");
             Employee a = (Employee) new ObjectInputStream(ba).readObject();
+            System.out.println("<< " + a);
 
             String wn[] = a.getName().trim().toLowerCase().split("\\s+");
             String resname = "";
@@ -50,6 +51,7 @@ public class JNP1001_UdpObjectEmployee {
             sp = new DatagramPacket(s, s.length, InetAddress.getByName(HOST), PORT);
             client.send(sp);
             System.out.println(">> requestId=" + id + ", " + s.length + " byte");
+            System.out.println(">> " + a);
         } catch (SocketTimeoutException e) {
             System.err.println("[LỖI] Server không phản hồi sau 5s (sai HOST/PORT/qCode hoặc mạng chặn UDP)");
         } catch (StreamCorruptedException | ClassNotFoundException | InvalidClassException e) {

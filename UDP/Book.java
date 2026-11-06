@@ -48,4 +48,9 @@ public class Book implements Serializable {
     public void setPublishDate(String publishDate) {
         this.publishDate = publishDate;
     }
+
+    @Override
+    public String toString() {
+        return "Book{id=" + id + ", title=" + title + ", author=" + author + ", isbn=" + isbn + ", publishDate=" + publishDate + "}";
+    }
 }

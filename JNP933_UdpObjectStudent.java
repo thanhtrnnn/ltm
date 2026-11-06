@@ -30,6 +30,7 @@ public class JNP933_UdpObjectStudent {
             String id = new String(ix);
             System.out.println("<< requestId=" + id + ", " + rp.getLength() + " byte");
             Student a = (Student) new ObjectInputStream(ba).readObject();
+            System.out.println("<< " + a);
 
             String wn[] = a.getName().toLowerCase().split("\\s+");
             String resname = "", resmail = "";
@@ -49,6 +50,7 @@ public class JNP933_UdpObjectStudent {
             sp = new DatagramPacket(s, s.length, InetAddress.getByName(HOST), PORT);
             client.send(sp);
             System.out.println(">> requestId=" + id + ", " + s.length + " byte");
+            System.out.println(">> " + a);
         } catch (SocketTimeoutException e) {
             System.err.println("[LỖI] Server không phản hồi sau 5s (sai HOST/PORT/qCode hoặc mạng chặn UDP)");
         } catch (StreamCorruptedException | ClassNotFoundException | InvalidClassException e) {

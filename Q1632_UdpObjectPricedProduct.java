@@ -31,6 +31,7 @@ public class Q1632_UdpObjectPricedProduct {
             String id = new String(ix);
             System.out.println("<< requestId=" + id + ", " + rp.getLength() + " byte");
             PricedProduct a = (PricedProduct) new ObjectInputStream(ba).readObject();
+            System.out.println("<< " + a);
 
             double p = a.getBasePrice() * (1 + a.getTaxRate() / 100) * (1 - a.getDiscountRate() / 100);
             a.setFinalPrice(Math.round(p * 100) / 100.0);
@@ -42,6 +43,7 @@ public class Q1632_UdpObjectPricedProduct {
             sp = new DatagramPacket(s, s.length, InetAddress.getByName(HOST), PORT);
             client.send(sp);
             System.out.println(">> requestId=" + id + ", " + s.length + " byte");
+            System.out.println(">> " + a);
         } catch (SocketTimeoutException e) {
             System.err.println("[LỖI] Server không phản hồi sau 5s (sai HOST/PORT/qCode hoặc mạng chặn UDP)");
         } catch (StreamCorruptedException | ClassNotFoundException | InvalidClassException e) {

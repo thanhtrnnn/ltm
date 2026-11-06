@@ -38,5 +38,9 @@ public class Student implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Student{id=" + id + ", code=" + code + ", name=" + name + ", email=" + email + "}";
+    }
 }

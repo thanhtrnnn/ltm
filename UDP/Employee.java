@@ -36,4 +36,9 @@ public class Employee implements Serializable {
     public void setHireDate(String hireDate) {
         this.hireDate = hireDate;
     }
+
+    @Override
+    public String toString() {
+        return "Employee{id=" + id + ", name=" + name + ", hireDate=" + hireDate + ", salary=" + salary + "}";
+    }
 }

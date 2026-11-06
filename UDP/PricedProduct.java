@@ -58,4 +58,9 @@ public class PricedProduct implements Serializable {
     public void setFinalPrice(double finalPrice) {
         this.finalPrice = finalPrice;
     }
+
+    @Override
+    public String toString() {
+        return "PricedProduct{id=" + id + ", name=" + name + ", basePrice=" + basePrice + ", taxRate=" + taxRate + ", discountRate=" + discountRate + ", finalPrice=" + finalPrice + "}";
+    }
 }
